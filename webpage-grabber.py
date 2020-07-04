@@ -8,7 +8,7 @@ from tld import get_tld
     
 
 path = os.getcwd()
-Format_String = "%d-%b-%Y-%H-%M-%S-%f"
+Format_String = "%Y-%m-%d-%H-%M-%S"
 timestamp = datetime.utcnow().strftime(Format_String)
 logname = os.path.join(path, 'history.log')
 
@@ -59,7 +59,7 @@ if site_content.status_code == 500:
     logging.warning('Failed: 500 - Forbidden or server failure ' + url)
     sys.exit('EXIT: 500 - Forbidden or server failure: ' + url)
 
-file_name = os.path.join(downloads_dir, site_name + timestamp + '.html')
+file_name = os.path.join(downloads_dir, site_name + '_' + timestamp + '.html')
 
 try:
     with open(file_name, 'w', encoding='utf-8') as file:
