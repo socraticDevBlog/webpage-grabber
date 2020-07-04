@@ -19,8 +19,8 @@ logging.basicConfig(filename=logname,
                             level=logging.INFO)
 
 if len(sys.argv) < 2:
-    logging.warning('expecting url as 1st parameter')
-    sys.exit('EXIT: no url provided')
+    logging.warning('Failed: kindly provide a valid URL as 1st parameter: $python webpage-grabber.py https://mysite.cohttp://ftp.nasa.com/m')
+    sys.exit('EXIT: Failed: kindly provide a valid URL as 1st parameter: $python webpage-grabber.py https://mysite.com')
 
 url = str(sys.argv[1])
 
@@ -37,18 +37,35 @@ regex = re.compile(
 is_valid_url = re.match(regex, url)
 
 if not is_valid_url:
-    logging.warning('invalid url provided')
-    sys.exit('EXIT: invalid url provided')
+    logging.warning('Failed: invalid url provided (full format required ex.: https//mysite.com): ' + url)
+    sys.exit('EXIT: Failed: invalid url provided (full format required ex.: https//mysite.com): ' + url)
 
 downloads_dir = os.path.join(path,'downloads')
 
 res = get_tld(url, as_object=True)
 site_name = res.fld
-site_content = requests.get(url)
+
+try:
+    site_content = requests.get(url)
+except Exception as e:
+    logging.error('Error: http request (Get) failed. Error message says ->' + str(e))
+    sys.exit('EXIT: http request (Get) failed.  Read log file for more infos when downloading -> ' + url) 
+
+if site_content.status_code == 404:
+    logging.warning('Failed: 404 not found ' + url)
+    sys.exit('EXIT: 404 not found: ' + url)
+
+if site_content.status_code == 500:
+    logging.warning('Failed: 500 - Forbidden or server failure ' + url)
+    sys.exit('EXIT: 500 - Forbidden or server failure: ' + url)
 
 file_name = os.path.join(downloads_dir, site_name + timestamp + '.html')
 
-with open(file_name,'w', encoding='utf-8') as file:
-    file.write(site_content.text)
-
-logging.info('Success html code from: ' + url)
+try:
+    with open(file_name, 'w', encoding='utf-8') as file:
+        file.write(site_content.text)
+        logging.info('Successfully downloaded html code from: ' + url)
+        sys.exit('Successfully downloaded html code from: ' + url)
+except Exception as e:
+    logging.error('Error: couldnt write result to file. Error message says ->' + str(e))
+    sys.exit('EXIT: failed to write result to file.  Read log file for more infos when downloading -> ' + url)
