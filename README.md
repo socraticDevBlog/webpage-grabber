@@ -16,4 +16,4 @@ Webpage-grabber script takes a valid URL as CLI argument and downloads the websi
 
 ### All operations and errors are logged and easy to understand
 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+![screen capture of log file](screenshot.png)
