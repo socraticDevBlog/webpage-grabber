@@ -17,3 +17,8 @@ Webpage-grabber script takes a valid URL as CLI argument and downloads the websi
 ### All operations and errors are logged and easy to understand
 
 ![screen capture of log file](screenshot.png)
+
+### Add an extra label as a second parameter following the URL to achieve more granular outputted file names
+
+![screen capture of extra label results](extra_label.png)
+
