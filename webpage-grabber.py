@@ -71,7 +71,7 @@ if args_count == MINIMUM_ARGS_COUNT:
     file_name = os.path.join(downloads_dir, site_name + SPACER_CHAR + timestamp + '.html')
 else:
     extra_label = str(sys.argv[EXTRA_LABEL_INDEX])
-    file_name = os.path.join(downloads_dir, site_name + SPACER_CHAR + extra_label + SPACER_CHAR + timestamp + SPACER_CHAR + '.html')
+    file_name = os.path.join(downloads_dir, site_name + SPACER_CHAR + extra_label + SPACER_CHAR + timestamp + '.html')
 
 try:
     with open(file_name, 'w', encoding='utf-8') as file:
