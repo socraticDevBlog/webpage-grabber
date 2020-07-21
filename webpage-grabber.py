@@ -54,7 +54,8 @@ res = get_tld(url, as_object=True)
 site_name = res.fld
 
 try:
-    site_content = requests.get(url)
+    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+    site_content = requests.get(url, headers = headers)
 except Exception as e:
     logging.error('Error: http request (Get) failed. Error message says ->' + str(e))
     sys.exit('EXIT: http request (Get) failed.  Read log file for more infos when downloading -> ' + url) 
